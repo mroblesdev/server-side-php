@@ -15,7 +15,7 @@
 ## Instrucciones de uso
 - Descargar proyecto
 - Crear base de datos (almacen) e importar archivo ```almacen.sql```
-- Cambiar los datos de acceso en ```conexión.php```
+- Cambiar los datos de acceso en ```config.php```
 
 ## Autores ✒️
 - **Marco Robles** - *Desarrollo* - [mroblesdev](https://github.com/mroblesdev)
