@@ -19,12 +19,32 @@
         <div class="container py-4 text-center">
             <h2>Empleados</h2>
 
-            <div class="row justify-content-md-center">
-                <div class="col-md-4">
-                    <form action="" method="post">
-                        <label for="campo">Buscar: </label>
-                        <input type="text" name="campo" id="campo">
-                    </form>
+            <div class="row g-4">
+
+                <div class="col-auto">
+                    <label for="num_registros" class="col-form-label">Mostrar: </label>
+                </div>
+
+                <div class="col-auto">
+                    <select name="num_registros" id="num_registros" class="form-select">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+
+                <div class="col-auto">
+                    <label for="num_registros" class="col-form-label">registros </label>
+                </div>
+
+                <div class="col-5"></div>
+
+                <div class="col-auto">
+                    <label for="campo" class="col-form-label">Buscar: </label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" name="campo" id="campo" class="form-control">
                 </div>
             </div>
 
@@ -48,30 +68,56 @@
                     </table>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <label id="lbl-total"></label>
+                </div>
+
+                <div class="col-6" id="nav-paginacion"></div>
+            </div>
         </div>
     </main>
 
     <script>
+        let paginaActual = 1
         /* Llamando a la función getData() */
-        getData()
+        getData(paginaActual)
 
         /* Escuchar un evento keyup en el campo de entrada y luego llamar a la función getData. */
-        document.getElementById("campo").addEventListener("keyup", getData)
+        document.getElementById("campo").addEventListener("keyup", function() {
+            getData(1)
+        }, false)
+        document.getElementById("num_registros").addEventListener("change", function() {
+            getData(paginaActual)
+        }, false)
+
 
         /* Peticion AJAX */
-        function getData() {
+        function getData(pagina) {
             let input = document.getElementById("campo").value
+            let num_registros = document.getElementById("num_registros").value
             let content = document.getElementById("content")
+
+            if (pagina != null) {
+                paginaActual = pagina
+            }
+
             let url = "load.php"
             let formaData = new FormData()
             formaData.append('campo', input)
+            formaData.append('registros', num_registros)
+            formaData.append('pagina', paginaActual)
 
             fetch(url, {
                     method: "POST",
                     body: formaData
                 }).then(response => response.json())
                 .then(data => {
-                    content.innerHTML = data
+                    content.innerHTML = data.data
+                    document.getElementById("lbl-total").innerHTML = 'Mostrando ' + data.totalFiltro +
+                        ' de ' + data.totalRegistros + ' registros'
+                    document.getElementById("nav-paginacion").innerHTML = data.paginacion
                 }).catch(err => console.log(err))
         }
     </script>

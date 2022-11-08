@@ -6,6 +6,11 @@
 
 **Link del vídeo:** [https://youtu.be/IP2Ye2KKfoc](https://youtu.be/IP2Ye2KKfoc) 
 
+## Vídeo 2 📂
+- Paginación de resultados
+- Seleccionar limite de registros por página
+
+**Link del vídeo:** [https://youtu.be/NHF7RH3ALPM](https://youtu.be/NHF7RH3ALPM) 
 
 ## Requerimientos 📋
 - Servidor Web Apache
@@ -29,4 +34,3 @@ Este proyecto está bajo la Licencia GNU General Public License v3.0 - mira el a
 * Comenta a otros sobre este proyecto 📢
 * Invita una cerveza 🍺 o un café ☕ [Da clic aquí](https://www.paypal.com/paypalme/markorobles?locale.x=es_XC.) 
 * Da las gracias públicamente 🤓.
-
