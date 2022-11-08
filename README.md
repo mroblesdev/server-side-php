@@ -27,7 +27,7 @@
 
 ## Licencia 📄
 
-Este proyecto está bajo la Licencia GNU General Public License v3.0 - mira el archivo [license](license) para más detalles.
+Este proyecto está bajo la Licencia GNU General Public License v3.0 - mira el archivo [LICENSE](LICENSE) para más detalles.
 
 ## Expresiones de Gratitud 🎁
 
