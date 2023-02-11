@@ -9,12 +9,11 @@
 require 'config.php';
 
 /* Un arreglo de las columnas a mostrar en la tabla */
-$columns = ['no_emp', 'fecha_nacimiento', 'nombre', 'apellido', 'fecha_ingreso'];
+$columns = ['no_emp', 'nombre', 'apellido', 'fecha_nacimiento', 'fecha_ingreso'];
 
 /* Nombre de la tabla */
 $table = "empleados";
 
-/* La clave principal de la tabla. */
 $id = 'no_emp';
 
 $campo = isset($_POST['campo']) ? $conn->real_escape_string($_POST['campo']) : null;
@@ -47,11 +46,24 @@ if (!$pagina) {
 
 $sLimit = "LIMIT $inicio , $limit";
 
+/**
+ * Ordenamiento
+ */
+
+ $sOrder = "";
+ if(isset($_POST['orderCol'])){
+    $orderCol = $_POST['orderCol'];
+    $oderType = isset($_POST['orderType']) ? $_POST['orderType'] : 'asc';
+    
+    $sOrder = "ORDER BY ". $columns[intval($orderCol)] . ' ' . $oderType;
+ }
+
 
 /* Consulta */
 $sql = "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", $columns) . "
 FROM $table
 $where
+$sOrder
 $sLimit";
 $resultado = $conn->query($sql);
 $num_rows = $resultado->num_rows;
@@ -83,8 +95,8 @@ if ($num_rows > 0) {
         $output['data'] .= '<td>' . $row['apellido'] . '</td>';
         $output['data'] .= '<td>' . $row['fecha_nacimiento'] . '</td>';
         $output['data'] .= '<td>' . $row['fecha_ingreso'] . '</td>';
-        $output['data'] .= '<td><a href="">Editar</a></td>';
-        $output['data'] .= '<td><a href="">Eliminar</a></td>';
+        $output['data'] .= '<td><a class="btn btn-warning btn-sm" href="editar.php?id=' . $row['no_emp'] . '">Editar</a></td>';
+        $output['data'] .= "<td><a class='btn btn-danger btn-sm' href='elimiar.php?id=" . $row['no_emp'] . "'>Eliminar</a></td>";
         $output['data'] .= '</tr>';
     }
 } else {
@@ -115,7 +127,7 @@ if ($output['totalRegistros'] > 0) {
         if ($pagina == $i) {
             $output['paginacion'] .= '<li class="page-item active"><a class="page-link" href="#">' . $i . '</a></li>';
         } else {
-            $output['paginacion'] .= '<li class="page-item"><a class="page-link" href="#" onclick="getData(' . $i . ')">' . $i . '</a></li>';
+            $output['paginacion'] .= '<li class="page-item"><a class="page-link" href="#" onclick="nextPage(' . $i . ')">' . $i . '</a></li>';
         }
     }
 

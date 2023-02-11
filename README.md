@@ -4,13 +4,18 @@
 - Carga datos de MySQL con PHP y AJAX
 - Búsqueda en tiempo real
 
-**Link del vídeo:** [https://youtu.be/IP2Ye2KKfoc](https://youtu.be/IP2Ye2KKfoc) 
+**Link del vídeo:** [https://youtu.be/IP2Ye2KKfoc](https://youtu.be/IP2Ye2KKfoc)
 
 ## Vídeo 2 📂
 - Paginación de resultados
 - Seleccionar limite de registros por página
 
-**Link del vídeo:** [https://youtu.be/NHF7RH3ALPM](https://youtu.be/NHF7RH3ALPM) 
+**Link del vídeo:** [https://youtu.be/NHF7RH3ALPM](https://youtu.be/NHF7RH3ALPM)
+
+## Vídeo 3 ⬆⬇
+- Ordenar resultados
+
+**Link del vídeo:** [https://youtu.be/y0bZ9cMDo6w](https://youtu.be/y0bZ9cMDo6w)
 
 ## Requerimientos 📋
 - Servidor Web Apache

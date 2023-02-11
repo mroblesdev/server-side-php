@@ -50,13 +50,13 @@
 
             <div class="row py-4">
                 <div class="col">
-                    <table class="table table-sm table-bordered">
+                    <table class="table table-sm table-bordered table-striped">
                         <thead>
-                            <th>Num. empleado</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Fecha nacimiento</th>
-                            <th>Fecha ingreso</th>
+                            <th class="sort asc">Num. empleado</th>
+                            <th class="sort asc">Nombre</th>
+                            <th class="sort asc">Apellido</th>
+                            <th class="sort asc">Fecha nacimiento</th>
+                            <th class="sort asc">Fecha ingreso</th>
                             <th></th>
                             <th></th>
                         </thead>
@@ -75,39 +75,47 @@
                 </div>
 
                 <div class="col-6" id="nav-paginacion"></div>
+
+                <input type="hidden" id="pagina" value="1">
+                <input type="hidden" id="orderCol" value="0">
+                <input type="hidden" id="orderType" value="asc">
             </div>
         </div>
     </main>
 
     <script>
-        let paginaActual = 1
         /* Llamando a la función getData() */
-        getData(paginaActual)
+        getData()
 
         /* Escuchar un evento keyup en el campo de entrada y luego llamar a la función getData. */
         document.getElementById("campo").addEventListener("keyup", function() {
-            getData(1)
+            getData()
         }, false)
         document.getElementById("num_registros").addEventListener("change", function() {
-            getData(paginaActual)
+            getData()
         }, false)
 
 
         /* Peticion AJAX */
-        function getData(pagina) {
+        function getData() {
             let input = document.getElementById("campo").value
             let num_registros = document.getElementById("num_registros").value
             let content = document.getElementById("content")
+            let pagina = document.getElementById("pagina").value
+            let orderCol = document.getElementById("orderCol").value
+            let orderType = document.getElementById("orderType").value
 
-            if (pagina != null) {
-                paginaActual = pagina
+            if (pagina == null) {
+                pagina = 1
             }
 
             let url = "load.php"
             let formaData = new FormData()
             formaData.append('campo', input)
             formaData.append('registros', num_registros)
-            formaData.append('pagina', paginaActual)
+            formaData.append('pagina', pagina)
+            formaData.append('orderCol', orderCol)
+            formaData.append('orderType', orderType)
 
             fetch(url, {
                     method: "POST",
@@ -120,6 +128,36 @@
                     document.getElementById("nav-paginacion").innerHTML = data.paginacion
                 }).catch(err => console.log(err))
         }
+
+        function nextPage(pagina){
+            document.getElementById('pagina').value = pagina
+            getData()
+        }
+
+        let columns = document.getElementsByClassName("sort")
+        let tamanio = columns.length
+        for(let i = 0; i < tamanio; i++){
+            columns[i].addEventListener("click", ordenar)
+        }
+
+        function ordenar(e){
+            let elemento = e.target
+
+            document.getElementById('orderCol').value = elemento.cellIndex
+
+            if(elemento.classList.contains("asc")){
+                document.getElementById("orderType").value = "asc"
+                elemento.classList.remove("asc")
+                elemento.classList.add("desc")
+            } else {
+                document.getElementById("orderType").value = "desc"
+                elemento.classList.remove("desc")
+                elemento.classList.add("asc")
+            }
+
+            getData()
+        }
+
     </script>
 
     <!-- Bootstrap core JS -->
