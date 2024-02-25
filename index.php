@@ -10,7 +10,7 @@
     <title>Almacen</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 </head>
 
@@ -21,11 +21,11 @@
 
             <div class="row g-4">
 
-                <div class="col-auto">
+                <div class="col text-start">
                     <label for="num_registros" class="col-form-label">Mostrar: </label>
                 </div>
 
-                <div class="col-auto">
+                <div class="col text-start">
                     <select name="num_registros" id="num_registros" class="form-select">
                         <option value="10">10</option>
                         <option value="25">25</option>
@@ -34,16 +34,16 @@
                     </select>
                 </div>
 
-                <div class="col-auto">
+                <div class="col text-start">
                     <label for="num_registros" class="col-form-label">registros </label>
                 </div>
 
                 <div class="col-5"></div>
 
-                <div class="col-auto">
+                <div class="col text-end">
                     <label for="campo" class="col-form-label">Buscar: </label>
                 </div>
-                <div class="col-auto">
+                <div class="col-3 text-end">
                     <input type="text" name="campo" id="campo" class="form-control">
                 </div>
             </div>
@@ -129,23 +129,23 @@
                 }).catch(err => console.log(err))
         }
 
-        function nextPage(pagina){
+        function nextPage(pagina) {
             document.getElementById('pagina').value = pagina
             getData()
         }
 
         let columns = document.getElementsByClassName("sort")
         let tamanio = columns.length
-        for(let i = 0; i < tamanio; i++){
+        for (let i = 0; i < tamanio; i++) {
             columns[i].addEventListener("click", ordenar)
         }
 
-        function ordenar(e){
+        function ordenar(e) {
             let elemento = e.target
 
             document.getElementById('orderCol').value = elemento.cellIndex
 
-            if(elemento.classList.contains("asc")){
+            if (elemento.classList.contains("asc")) {
                 document.getElementById("orderType").value = "asc"
                 elemento.classList.remove("asc")
                 elemento.classList.add("desc")
@@ -157,12 +157,10 @@
 
             getData()
         }
-
     </script>
 
     <!-- Bootstrap core JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>
