@@ -1,7 +1,7 @@
 -- Base de datos: almacen
 -- Proyecto: Buscar datos en tiempo real con PHP, MySQL y AJAX
--- Autor: Marco Robles
--- Team: Códigos de Programación
+-- Autor: mroblesdev
+-- https://github.com/mroblesdev/server-side-php
 
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -189,57 +189,7 @@ INSERT INTO `empleados` (`no_emp`, `fecha_nacimiento`, `nombre`, `apellido`, `ge
 (10147, '1964-10-13', 'Kazuhito', 'Encarnacion', 'M', '1986-08-21'),
 (10148, '1957-10-04', 'Douadi', 'Azumi', 'M', '1995-10-10'),
 (10149, '1953-05-20', 'Xiadong', 'Perry', 'F', '1986-11-05'),
-(10150, '1955-01-29', 'Zhenbing', 'Perng', 'F', '1986-11-16'),
-(10151, '1959-03-06', 'Itzchak', 'Lichtner', 'M', '1990-04-10'),
-(10152, '1954-12-01', 'Jaques', 'Munro', 'F', '1986-01-27'),
-(10153, '1955-12-15', 'Heekeun', 'Majewski', 'M', '1987-04-08'),
-(10154, '1957-01-17', 'Abdulah', 'Thibadeau', 'F', '1990-12-12'),
-(10155, '1959-12-07', 'Adas', 'Nastansky', 'M', '1990-01-05'),
-(10156, '1964-09-19', 'Sumali', 'Fargier', 'M', '1985-03-10'),
-(10157, '1954-04-23', 'Nigel', 'Aloisi', 'M', '1985-11-02'),
-(10158, '1958-04-01', 'Khedija', 'Mitsuhashi', 'M', '1986-01-29'),
-(10159, '1955-03-03', 'Serif', 'Buescher', 'M', '1991-05-29'),
-(10160, '1953-10-18', 'Debatosh', 'Khasidashvili', 'M', '1989-01-30'),
-(10161, '1953-04-06', 'Hairong', 'Mellouli', 'F', '1988-04-03'),
-(10162, '1957-10-05', 'Florina', 'Eugenio', 'M', '1991-05-01'),
-(10163, '1952-09-17', 'Karsten', 'Szmurlo', 'M', '1989-07-19'),
-(10164, '1956-01-19', 'Jagoda', 'Braunmuhl', 'M', '1985-11-12'),
-(10165, '1960-06-16', 'Miyeon', 'Macedo', 'M', '1988-05-17'),
-(10166, '1953-05-10', 'Samphel', 'Siegrist', 'F', '1993-01-01'),
-(10167, '1958-05-23', 'Duangkaew', 'Rassart', 'M', '1992-04-04'),
-(10168, '1964-09-11', 'Dharmaraja', 'Stassinopoulos', 'M', '1986-12-06'),
-(10169, '1961-05-03', 'Sampalli', 'Snedden', 'F', '1992-07-24'),
-(10170, '1960-10-03', 'Kasturi', 'Jenevein', 'F', '1986-01-02'),
-(10171, '1957-09-11', 'Herbert', 'Trachtenberg', 'M', '1989-07-22'),
-(10172, '1957-03-25', 'Shigeu', 'Matzen', 'F', '1995-10-13'),
-(10173, '1962-10-28', 'Shrikanth', 'Mahmud', 'M', '1992-03-21'),
-(10174, '1959-05-15', 'Badri', 'Furudate', 'M', '1987-06-01'),
-(10175, '1960-01-11', 'Aleksandar', 'Ananiadou', 'F', '1988-01-11'),
-(10176, '1957-01-24', 'Brendon', 'Lenart', 'F', '1994-12-22'),
-(10177, '1954-11-08', 'Pragnesh', 'Iisaka', 'M', '1993-02-06'),
-(10178, '1963-03-13', 'Valery', 'Litvinov', 'M', '1986-10-07'),
-(10179, '1961-11-25', 'Deniz', 'Duclos', 'F', '1990-10-04'),
-(10180, '1956-01-29', 'Shaw', 'Wendorf', 'M', '1986-02-25'),
-(10181, '1963-01-22', 'Sibyl', 'Nooteboom', 'M', '1988-06-22'),
-(10182, '1961-02-04', 'Moriyoshi', 'Merey', 'F', '1990-09-02'),
-(10183, '1954-10-17', 'Mechthild', 'Bonifati', 'M', '1996-08-11'),
-(10184, '1957-05-22', 'Mihalis', 'Lowrie', 'M', '1987-10-29'),
-(10185, '1959-12-05', 'Duro', 'Sidhu', 'F', '1986-03-01'),
-(10186, '1953-07-16', 'Shigehito', 'Kropatsch', 'M', '1986-03-28'),
-(10187, '1961-05-26', 'Tommaso', 'Narwekar', 'F', '1991-06-01'),
-(10188, '1956-07-13', 'Christ', 'Muchinsky', 'F', '1987-08-27'),
-(10189, '1955-11-12', 'Khalid', 'Erva', 'M', '1989-10-05'),
-(10190, '1964-12-11', 'Arve', 'Fairtlough', 'F', '1986-06-23'),
-(10191, '1959-04-08', 'Zdislav', 'Nastansky', 'M', '1986-04-10'),
-(10192, '1960-09-16', 'Mohua', 'Falck', 'M', '1988-06-13'),
-(10193, '1960-06-29', 'Masaru', 'Cheshire', 'M', '1991-07-28'),
-(10194, '1954-01-29', 'Josyula', 'Hofmeyr', 'F', '1989-05-15'),
-(10195, '1963-11-13', 'Annemarie', 'Redmiles', 'M', '1985-02-15'),
-(10196, '1954-01-27', 'Marc', 'Hellwagner', 'M', '1994-11-16'),
-(10197, '1963-08-06', 'Kasidit', 'Krzyzanowski', 'F', '1993-11-22'),
-(10198, '1953-05-28', 'Pranav', 'Furedi', 'M', '1985-08-31'),
-(10199, '1959-04-07', 'Kazuhisa', 'Ranta', 'M', '1997-04-29'),
-(10200, '1961-12-31', 'Vidya', 'Awdeh', 'M', '1985-10-16');
+(10150, '1955-01-29', 'Zhenbing', 'Perng', 'F', '1986-11-16');
 
 --
 -- Índices para tablas volcadas

@@ -21,11 +21,11 @@
 
             <div class="row g-4">
 
-                <div class="col text-start">
+                <div class="col-auto text-start">
                     <label for="num_registros" class="col-form-label">Mostrar: </label>
                 </div>
 
-                <div class="col text-start">
+                <div class="col-auto text-start">
                     <select name="num_registros" id="num_registros" class="form-select">
                         <option value="10">10</option>
                         <option value="25">25</option>
@@ -34,16 +34,16 @@
                     </select>
                 </div>
 
-                <div class="col text-start">
+                <div class="col-auto text-start">
                     <label for="num_registros" class="col-form-label">registros </label>
                 </div>
 
-                <div class="col-5"></div>
+                <div class="col-md-4 col-xl-5"></div>
 
-                <div class="col text-end">
+                <div class="col-6 col-md-1 text-end">
                     <label for="campo" class="col-form-label">Buscar: </label>
                 </div>
-                <div class="col-3 text-end">
+                <div class="col-6 col-md-3 text-end">
                     <input type="text" name="campo" id="campo" class="form-control">
                 </div>
             </div>
@@ -69,47 +69,35 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-6">
+            <div class="row justify-content-between">
+
+                <div class="col-12 col-md-4">
                     <label id="lbl-total"></label>
                 </div>
 
-                <div class="col-6" id="nav-paginacion"></div>
+                <div class="col-12 col-md-4" id="nav-paginacion"></div>
 
                 <input type="hidden" id="pagina" value="1">
                 <input type="hidden" id="orderCol" value="0">
                 <input type="hidden" id="orderType" value="asc">
+
             </div>
         </div>
     </main>
 
     <script>
-        /* Llamando a la función getData() */
-        getData()
+        // Llamando a la función getData() al cargar la página
+        document.addEventListener("DOMContentLoaded", getData);
 
-        /* Escuchar un evento keyup en el campo de entrada y luego llamar a la función getData. */
-        document.getElementById("campo").addEventListener("keyup", function() {
-            getData()
-        }, false)
-        document.getElementById("num_registros").addEventListener("change", function() {
-            getData()
-        }, false)
-
-
-        /* Peticion AJAX */
+        // Función para obtener datos con AJAX
         function getData() {
             let input = document.getElementById("campo").value
             let num_registros = document.getElementById("num_registros").value
             let content = document.getElementById("content")
-            let pagina = document.getElementById("pagina").value
+            let pagina = document.getElementById("pagina").value || 1;
             let orderCol = document.getElementById("orderCol").value
             let orderType = document.getElementById("orderType").value
 
-            if (pagina == null) {
-                pagina = 1
-            }
-
-            let url = "load.php"
             let formaData = new FormData()
             formaData.append('campo', input)
             formaData.append('registros', num_registros)
@@ -117,46 +105,52 @@
             formaData.append('orderCol', orderCol)
             formaData.append('orderType', orderType)
 
-            fetch(url, {
+            fetch("load.php", {
                     method: "POST",
                     body: formaData
-                }).then(response => response.json())
+                })
+                .then(response => response.json())
                 .then(data => {
                     content.innerHTML = data.data
-                    document.getElementById("lbl-total").innerHTML = 'Mostrando ' + data.totalFiltro +
-                        ' de ' + data.totalRegistros + ' registros'
+                    document.getElementById("lbl-total").innerHTML = `Mostrando ${data.totalFiltro} de ${data.totalRegistros} registros`;
                     document.getElementById("nav-paginacion").innerHTML = data.paginacion
-                }).catch(err => console.log(err))
+
+                    // Si la página actual no tiene resultados, ajustar la paginación para mostrar la primera página
+                    if (data.data.includes('Sin resultados') && parseInt(pagina) !== 1) {
+                        nextPage(1); // Ir a la primera página
+                    }
+                })
+                .catch(err => console.log(err))
         }
 
+        // Función para cambiar de página
         function nextPage(pagina) {
             document.getElementById('pagina').value = pagina
             getData()
         }
 
-        let columns = document.getElementsByClassName("sort")
-        let tamanio = columns.length
-        for (let i = 0; i < tamanio; i++) {
-            columns[i].addEventListener("click", ordenar)
-        }
-
+        // Función para ordenar columnas
         function ordenar(e) {
-            let elemento = e.target
+            let elemento = e.target;
+            let orderType = elemento.classList.contains("asc") ? "desc" : "asc";
 
-            document.getElementById('orderCol').value = elemento.cellIndex
-
-            if (elemento.classList.contains("asc")) {
-                document.getElementById("orderType").value = "asc"
-                elemento.classList.remove("asc")
-                elemento.classList.add("desc")
-            } else {
-                document.getElementById("orderType").value = "desc"
-                elemento.classList.remove("desc")
-                elemento.classList.add("asc")
-            }
+            document.getElementById('orderCol').value = elemento.cellIndex;
+            document.getElementById("orderType").value = orderType;
+            elemento.classList.toggle("asc");
+            elemento.classList.toggle("desc");
 
             getData()
         }
+
+        // Event listeners para los eventos de cambio en el campo de entrada y el select
+        document.getElementById("campo").addEventListener("keyup", getData);
+        document.getElementById("num_registros").addEventListener("change", getData);
+
+        // Event listener para ordenar las columnas
+        let columns = document.querySelectorAll(".sort");
+        columns.forEach(column => {
+            column.addEventListener("click", ordenar);
+        });
     </script>
 
     <!-- Bootstrap core JS -->

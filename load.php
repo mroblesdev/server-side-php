@@ -1,25 +1,28 @@
 <?php
-/*
-* Script: Cargar datos de lado del servidor con PHP y MySQL
-* Autor: Marco Robles
-* Team: Códigos de Programación
-*/
 
+/**
+ * Script para cargar datos de lado del servidor con PHP y MySQL
+ *
+ * @author mroblesdev
+ * @link https://github.com/mroblesdev/server-side-php
+ * @license: MIT
+ */
 
 require 'config.php';
 
-/* Un arreglo de las columnas a mostrar en la tabla */
+// Columnas a mostrar en la tabla
 $columns = ['no_emp', 'nombre', 'apellido', 'fecha_nacimiento', 'fecha_ingreso'];
 
-/* Nombre de la tabla */
+// Nombre de la tabla
 $table = "empleados";
 
+// Clave principal de la tabla
 $id = 'no_emp';
 
+// Campo a buscar
 $campo = isset($_POST['campo']) ? $conn->real_escape_string($_POST['campo']) : null;
 
-
-/* Filtrado */
+// Filtrado
 $where = '';
 
 if ($campo != null) {
@@ -33,7 +36,7 @@ if ($campo != null) {
     $where .= ")";
 }
 
-/* Limit */
+// Limites
 $limit = isset($_POST['registros']) ? $conn->real_escape_string($_POST['registros']) : 10;
 $pagina = isset($_POST['pagina']) ? $conn->real_escape_string($_POST['pagina']) : 0;
 
@@ -46,20 +49,17 @@ if (!$pagina) {
 
 $sLimit = "LIMIT $inicio , $limit";
 
-/**
- * Ordenamiento
- */
+// Ordenamiento
 
- $sOrder = "";
- if(isset($_POST['orderCol'])){
+$sOrder = "";
+if (isset($_POST['orderCol'])) {
     $orderCol = $_POST['orderCol'];
     $oderType = isset($_POST['orderType']) ? $_POST['orderType'] : 'asc';
-    
-    $sOrder = "ORDER BY ". $columns[intval($orderCol)] . ' ' . $oderType;
- }
 
+    $sOrder = "ORDER BY " . $columns[intval($orderCol)] . ' ' . $oderType;
+}
 
-/* Consulta */
+// Consulta
 $sql = "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", $columns) . "
 FROM $table
 $where
@@ -68,19 +68,19 @@ $sLimit";
 $resultado = $conn->query($sql);
 $num_rows = $resultado->num_rows;
 
-/* Consulta para total de registro filtrados */
+// Consulta para total de registro filtrados
 $sqlFiltro = "SELECT FOUND_ROWS()";
 $resFiltro = $conn->query($sqlFiltro);
 $row_filtro = $resFiltro->fetch_array();
 $totalFiltro = $row_filtro[0];
 
-/* Consulta para total de registro filtrados */
+// Consulta para total de registro
 $sqlTotal = "SELECT count($id) FROM $table ";
 $resTotal = $conn->query($sqlTotal);
 $row_total = $resTotal->fetch_array();
 $totalRegistros = $row_total[0];
 
-/* Mostrado resultados */
+// Mostrado resultados
 $output = [];
 $output['totalRegistros'] = $totalRegistros;
 $output['totalFiltro'] = $totalFiltro;
@@ -105,30 +105,20 @@ if ($num_rows > 0) {
     $output['data'] .= '</tr>';
 }
 
-if ($output['totalRegistros'] > 0) {
-    $totalPaginas = ceil($output['totalRegistros'] / $limit);
+// Paginación
+if ($totalRegistros > 0) {
+    $totalPaginas = ceil($totalFiltro / $limit);
 
     $output['paginacion'] .= '<nav>';
     $output['paginacion'] .= '<ul class="pagination">';
 
-    $numeroInicio = 1;
-
-    if(($pagina - 4) > 1){
-        $numeroInicio = $pagina - 4;
-    }
-
-    $numeroFin = $numeroInicio + 9;
-
-    if($numeroFin > $totalPaginas){
-        $numeroFin = $totalPaginas;
-    }
+    $numeroInicio = max(1, $pagina - 4);
+    $numeroFin = min($totalPaginas, $numeroInicio + 9);
 
     for ($i = $numeroInicio; $i <= $numeroFin; $i++) {
-        if ($pagina == $i) {
-            $output['paginacion'] .= '<li class="page-item active"><a class="page-link" href="#">' . $i . '</a></li>';
-        } else {
-            $output['paginacion'] .= '<li class="page-item"><a class="page-link" href="#" onclick="nextPage(' . $i . ')">' . $i . '</a></li>';
-        }
+        $output['paginacion'] .= '<li class="page-item' . ($pagina == $i ? ' active' : '') . '">';
+        $output['paginacion'] .= '<a class="page-link" href="#" onclick="nextPage(' . $i . ')">' . $i . '</a>';
+        $output['paginacion'] .= '</li>';
     }
 
     $output['paginacion'] .= '</ul>';
