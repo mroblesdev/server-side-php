@@ -141,9 +141,13 @@
 
             getData()
         }
-
+        // Función para cambiar de página
+        function resetPagina() {
+            document.getElementById('pagina').value = 1
+            getData()
+        }
         // Event listeners para los eventos de cambio en el campo de entrada y el select
-        document.getElementById("campo").addEventListener("keyup", getData);
+        document.getElementById("campo").addEventListener("keyup", resetPagina);
         document.getElementById("num_registros").addEventListener("change", getData);
 
         // Event listener para ordenar las columnas
