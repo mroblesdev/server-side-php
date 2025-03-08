@@ -60,7 +60,7 @@ if (isset($_POST['orderCol'])) {
 }
 
 // Consulta
-$sql = "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", $columns) . "
+$sql = "SELECT " . implode(", ", $columns) . "
 FROM $table
 $where
 $sOrder
@@ -69,10 +69,10 @@ $resultado = $conn->query($sql);
 $num_rows = $resultado->num_rows;
 
 // Consulta para total de registro filtrados
-$sqlFiltro = "SELECT FOUND_ROWS()";
+$sqlFiltro = "SELECT COUNT($id) AS num FROM $table $where";
 $resFiltro = $conn->query($sqlFiltro);
 $row_filtro = $resFiltro->fetch_array();
-$totalFiltro = $row_filtro[0];
+$totalFiltro = $row_filtro['num'];
 
 // Consulta para total de registro
 $sqlTotal = "SELECT count($id) FROM $table ";
